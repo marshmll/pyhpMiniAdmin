@@ -1,9 +1,10 @@
+from sqlalchemy.orm import declarative_base
 from datetime import date, datetime
 from typing import Optional, Set
 from sqlalchemy import String, Integer, Date, DateTime, ForeignKey, UniqueConstraint, CHAR 
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .database import Base
+Base = declarative_base()
 
 class Pessoa(Base):
     __tablename__ = "pessoas"
@@ -12,7 +13,7 @@ class Pessoa(Base):
     nome : Mapped[str] = mapped_column(String(100))
     data_nasc : Mapped[date] = mapped_column(Date)
     cpf : Mapped[Optional[str]] = mapped_column(String(11))
-    type : Mapped[str]
+    type : Mapped[str] = mapped_column(String(20))
 
     __mapper_args__ = {
         "polymorphic_identity": "pessoa",
@@ -27,7 +28,7 @@ class Pessoa(Base):
         back_populates="pessoa", cascade="all, delete-orphan"
     )
 
-    def __repr__(self) -> str:
+    def __repr__(self):
         return f"Pessoa(id={self.id!r}, nome={self.nome!r}, cpf={self.cpf!r})"
 
 
@@ -48,6 +49,10 @@ class Aluno(Pessoa):
     }
 
     pessoa : Mapped["Pessoa"] = relationship(
+        back_populates="alunos",
+    )
+
+    turma : Mapped["Turma"] = relationship(
         back_populates="alunos",
     )
 
@@ -94,6 +99,10 @@ class Turma(Base):
         back_populates="turma", cascade="all, delete-orphan"
     )
 
+    alunos : Mapped[Optional[Set["Aluno"]]] = relationship(
+        back_populates="turma",
+    )
+
     def __repr__(self) -> str:
         return f"Turma(id={self.id!r}, serie={self.serie!r}, turno={self.turno!r})"
 
@@ -136,7 +145,7 @@ class Sala(Base):
 class Ministerio(Base):
     __tablename__ = "ministerios"
 
-    id : Mapped[int] = mapped_column(ForeignKey("professores.id"), primary_key=True)
+    professor_id : Mapped[int] = mapped_column(ForeignKey("professores.id"), primary_key=True)
     turma_id : Mapped[int] = mapped_column(ForeignKey("turmas.id"), primary_key=True)
     disciplina_id : Mapped[int] = mapped_column(ForeignKey("disciplinas.id"), primary_key=True)
     datavinculo : Mapped[datetime] = mapped_column(DateTime)
@@ -147,7 +156,7 @@ class Ministerio(Base):
     disciplina : Mapped["Disciplina"] = relationship(back_populates="ministerios")
 
     def __repr__(self):
-        return f"Ministerio(id={self.id!r}, turma_id={self.turma_id!r}, disciplina_id={self.disciplina_id!r}, datavinculo={self.datavinculo!r}, ano={self.ano!r}"
+        return f"Ministerio(professor_id={self.professor_id!r}, turma_id={self.turma_id!r}, disciplina_id={self.disciplina_id!r}, datavinculo={self.datavinculo.strftime('%d/%m/%Y, %H:%M:%S')!r}, ano={self.ano!r})"
 
 
 class Aula(Base):
@@ -164,4 +173,4 @@ class Aula(Base):
     disciplina : Mapped["Disciplina"] = relationship(back_populates="aulas")
 
     def __repr__(self):
-        return f"Aula(sala_id={self.sala_id!r}, turma_id={self.turma_id!r}, disciplina_id={self.disciplina_id!r}, datahora_inicio={self.datahora_inicio!r}, duracao={self.duracao!r})"
+        return f"Aula(sala_id={self.sala_id!r}, turma_id={self.turma_id!r}, disciplina_id={self.disciplina_id!r}, datahora_inicio={self.datahora_inicio.strftime('%d/%m/%Y, %H:%M:%S')!r}, duracao={self.duracao!r})"

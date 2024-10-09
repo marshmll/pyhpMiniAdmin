@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import date
 from typing import Optional
 
@@ -10,16 +10,16 @@ class AlunoBase(BaseModel):
     data_matricula: date
     turma_id: int
 
+
 # Create is the sensible data 
 class AlunoCreate(AlunoBase):
     cpf: Optional[str]
 
+
 # The standard class is for reading data.
 class Aluno(AlunoBase):
+    model_config = ConfigDict(from_attributes=True)
     id: int
-
-    class Config:
-        orm_mode = True
 
 
 class ProfessorBase(BaseModel):
@@ -34,7 +34,5 @@ class ProfessorCreate(ProfessorBase):
 
 
 class Professor(ProfessorBase):
+    model_config = ConfigDict(from_attributes=True)
     id: int
-
-    class Config:
-        orm_mode = True
