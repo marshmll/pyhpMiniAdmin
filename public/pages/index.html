@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/reset.css">
+    <link rel="stylesheet" href="/styles/index.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="shortcut icon" href="/images/php_logo.svg" type="image/x-icon">
+    <title>phpMiniAdmin</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header__logo">
+            <h1 class="header__title">phpMiniAdmin</h1>
+            <div class="header__icon"></div>
+        </div>
+    </header>
+    <main class="main">
+        <aside class="tables">
+            <h2 class="tables__title">Tabelas</h2>
+            <ul class="tables__list"></ul>
+        </aside>
+        <div class="view">
+            <div class="head">
+                <div class="head__left">
+                    <button class="head__button">
+                        <span class="material-symbols-outlined">add</span>
+                        INSERT
+                    </button>
+                </div>
+                <div class="head__right head__right--disabled">
+                    <button class="head__button">
+                        <span class="material-symbols-outlined">update</span>
+                        UPDATE
+                    </button>
+                    <button class="head__button">
+                        <span class="material-symbols-outlined">delete</span>
+                        DELETE
+                    </button>
+                </div>
+            </div>
+            <h2 class="table-title"></h2>
+            <table class="table">
+                <thead class="table__columns"></thead>
+                <tbody class="table__rows"></tbody>
+            </table>
+        </div>
+    </main>
+    <script type="module" src="/scripts/index.js"></script>
+</body>
+
+</html>

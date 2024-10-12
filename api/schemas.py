@@ -1,38 +1,92 @@
 from pydantic import BaseModel, ConfigDict
-from datetime import date
+from datetime import date, datetime
 from typing import Optional
 
-# Base is the shared data.
 class AlunoBase(BaseModel):
     nome: str
     data_nasc: date
     matricula: int
     data_matricula: date
     turma_id: int
-
-
-# Create is the sensible data 
-class AlunoCreate(AlunoBase):
     cpf: Optional[str]
 
+class AlunoCreate(AlunoBase):
+	pass
 
-# The standard class is for reading data.
 class Aluno(AlunoBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
-
 
 class ProfessorBase(BaseModel):
     nome: str
     data_nasc: date
     formacao: str
-
-
-class ProfessorCreate(ProfessorBase):
     cpf: Optional[str]
     reg_profissional: int
 
+class ProfessorCreate(ProfessorBase):
+	pass
 
 class Professor(ProfessorBase):
     model_config = ConfigDict(from_attributes=True)
     id: int
+
+class TurmaBase(BaseModel):
+	serie: str
+	turno: str
+
+class TurmaCreate(TurmaBase):
+	pass
+	
+class Turma(TurmaBase):
+	model_config = ConfigDict(from_attributes=True)
+	id: int
+
+class DisciplinaBase(BaseModel):
+	nome: str
+
+class DisciplinaCreate(DisciplinaBase):
+	pass
+	
+class Disciplina(DisciplinaBase):
+	model_config = ConfigDict(from_attributes=True)
+	id: int
+	
+class MinisterioBase(BaseModel):
+	datavinculo: datetime
+	ano: int
+
+class MinisterioCreate(MinisterioBase):
+	pass
+	
+class Ministerio(MinisterioBase):
+	model_config = ConfigDict(from_attributes=True)
+	professor_id: int
+	turma_id: int
+	disciplina_id: int
+	
+class AulaBase(BaseModel):
+	datahora_inicio: datetime
+	duracao: int
+	
+class AulaCreate(AulaBase):
+	pass
+	
+class Aula(AulaBase):
+	model_config = ConfigDict(from_attributes=True)
+	sala_id: int
+	turma_id: int
+	disciplina_id: int
+
+
+class SalaBase(BaseModel):
+	loc_num: int
+	loc_bloco: str
+	capacidade: int
+	
+class SalaCreate(SalaBase):
+	pass
+	
+class Sala(SalaBase):
+	model_config = ConfigDict(from_attributes=True)
+	id: int

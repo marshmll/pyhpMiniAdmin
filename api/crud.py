@@ -5,17 +5,38 @@ from . import models, schemas
 def get_aluno(db: Session, aluno_id: int):
     return db.query(models.Aluno).filter(models.Aluno.aluno_id == aluno_id).first()
 
+def get_aluno_por_matricula(db: Session, matricula: int):
+    return db.query(models.Aluno).filter(models.Aluno.matricula == matricula).first()
+
 def get_all_alunos(db: Session):
     return db.query(models.Aluno).all()
-
-def get_aluno_por_cpf(db: Session, cpf: Optional[str]):
-    return db.query(models.Aluno).filter(models.Aluno.cpf == cpf).first()
 
 def get_professor(db: Session, professor_id: int):
     return db.query(models.Professor).filter(models.Professor.professor_id == professor_id).first()
 
+def get_professor_por_registro(db: Session, reg_profissional: int):
+	return db.query(models.Professor).filter(models.Professor.reg_profissional == reg_profissional).first()
+
+def get_all_professores(db: Session):
+	return db.query(models.Professor).all()
+
+def get_all_turmas(db: Session):
+	return db.query(models.Turma).all()
+
+def get_all_disciplinas(db: Session):
+	return db.query(models.Disciplina).all()
+
 def get_disciplina(db: Session, nome: str):
     return db.query(models.Disciplina).filter(models.Disciplina.nome == nome).first()
+
+def get_all_ministerios(db: Session):
+	return db.query(models.Ministerio).all()
+
+def get_all_aulas(db: Session):
+	return db.query(models.Aula).all()
+
+def get_all_salas(db: Session):
+	return db.query(models.Sala).all()
 
 def create_aluno(db: Session, aluno: schemas.AlunoCreate):
     db_aluno = models.Aluno(

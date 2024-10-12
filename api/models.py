@@ -6,51 +6,16 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 Base = declarative_base()
 
-class Pessoa(Base):
-    __tablename__ = "pessoas"
+class Aluno(Base):
+    __tablename__ = "alunos"
 
-    id : Mapped[int] = mapped_column(primary_key=True)
+    id : Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     nome : Mapped[str] = mapped_column(String(100))
     data_nasc : Mapped[date] = mapped_column(Date)
     cpf : Mapped[Optional[str]] = mapped_column(String(11))
-    type : Mapped[str] = mapped_column(String(20))
-
-    __mapper_args__ = {
-        "polymorphic_identity": "pessoa",
-        "polymorphic_on": "type",
-    }
-
-    alunos : Mapped[Optional[Set["Aluno"]]] = relationship(
-        back_populates="pessoa", cascade="all, delete-orphan"
-    )
-
-    professores : Mapped[Optional[Set["Professor"]]] = relationship(
-        back_populates="pessoa", cascade="all, delete-orphan"
-    )
-
-    def __repr__(self):
-        return f"Pessoa(id={self.id!r}, nome={self.nome!r}, cpf={self.cpf!r})"
-
-
-class Aluno(Pessoa):
-    __tablename__ = "alunos"
-
-    id : Mapped[int] = mapped_column(ForeignKey("pessoas.id"), primary_key=True)
     matricula : Mapped[int] = mapped_column(Integer, primary_key=True)
     data_matricula : Mapped[date] = mapped_column(Date)
     turma_id : Mapped[int] = mapped_column(ForeignKey("turmas.id"))
-
-    __table_args__ = (
-        UniqueConstraint("id"),
-    )
-
-    __mapper_args__ = {
-        "polymorphic_identity": "aluno",
-    }
-
-    pessoa : Mapped["Pessoa"] = relationship(
-        back_populates="alunos",
-    )
 
     turma : Mapped["Turma"] = relationship(
         back_populates="alunos",
@@ -60,25 +25,19 @@ class Aluno(Pessoa):
         return f"Aluno(id={self.id!r}, nome={self.nome!r}, cpf={self.cpf!r}, matricula={self.matricula!r}, turma_id={self.turma_id!r})"
 
 
-class Professor(Pessoa):
+class Professor(Base):
     __tablename__ = "professores"
 
-    id : Mapped[int] = mapped_column(ForeignKey("pessoas.id"), primary_key=True)
+    id : Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    nome : Mapped[str] = mapped_column(String(100))
+    data_nasc : Mapped[date] = mapped_column(Date)
+    cpf : Mapped[Optional[str]] = mapped_column(String(11))
     reg_profissional : Mapped[int] = mapped_column(Integer, primary_key=True)
     formacao : Mapped[str] = mapped_column(String(100))
 
-    pessoa : Mapped["Pessoa"] = relationship(back_populates="professores")
     ministerios : Mapped[Optional[Set["Ministerio"]]] = relationship(
         back_populates="professor", cascade="all, delete-orphan"
     )
-
-    __table_args__ = (
-        UniqueConstraint("id"),
-    )
-
-    __mapper_args__ = {
-        "polymorphic_identity": "professor",
-    }
 
     def __repr__(self):
         return f"Professor(id={self.id!r}, nome={self.nome!r}, cpf={self.cpf!r}, reg_profissional={self.reg_profissional!r}, formacao={self.formacao!r})"
@@ -87,7 +46,7 @@ class Professor(Pessoa):
 class Turma(Base):
     __tablename__ = "turmas"
 
-    id : Mapped[int] = mapped_column(primary_key=True)
+    id : Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     serie : Mapped[str] = mapped_column(String(30))
     turno : Mapped[str] = mapped_column(CHAR(1))
 
@@ -110,7 +69,7 @@ class Turma(Base):
 class Disciplina(Base):
     __tablename__ = "disciplinas"
 
-    id : Mapped[int] = mapped_column(primary_key=True)
+    id : Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     nome : Mapped[str] = mapped_column(String(20))
 
     ministerios : Mapped[Optional[Set["Ministerio"]]] = relationship(
@@ -128,7 +87,7 @@ class Disciplina(Base):
 class Sala(Base):
     __tablename__ = "salas"
 
-    id : Mapped[int] = mapped_column(primary_key=True)
+    id : Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     loc_num : Mapped[int] = mapped_column(Integer)
     loc_bloco : Mapped[str] = mapped_column(String(20))
     capacidade : Mapped[int] = mapped_column(Integer)

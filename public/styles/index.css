@@ -1,0 +1,182 @@
+.header {
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    margin-bottom: 1rem;
+}
+
+.header__logo {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.header__title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #5936ac;
+}
+
+.header__icon {
+    margin-left: .5rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-image: url('/images/php_logo.svg');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.tables {
+    width: 35%;
+}
+
+.tables__title {
+    color: #5936ac;
+    text-align: center;
+    width: 100%;
+    margin-bottom: .6rem;
+}
+
+.tables__list {
+    width: 100%;
+    height: 100%;
+    padding: .7rem;
+}
+
+.tables__item {
+    width: 100%;
+    height: 2rem;
+    margin-bottom: .4rem;
+}
+
+.tables__button {
+    width: 100%;
+    height: 100%;
+    color: #5936ac;
+    border: 1px solid #5936ac;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    span {
+        margin-right: .2rem;
+    }
+}
+
+.tables__button:hover {
+    background-color: #d7c6ff;
+}
+
+.tables__button--active {
+    background-color: #5936ac;
+    color: white;
+    font-weight: 800;
+}
+
+.view {
+    width: 75%;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.head {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15%;
+    margin-bottom: 2rem;
+    position: fixed;
+}
+
+.head__left,
+.head__right {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
+}
+
+.head__right--disabled {
+    opacity: 50%;
+
+    button {
+        cursor: not-allowed;
+    }
+}
+
+.head__button {
+    background: #5936ac;
+    border-radius: 999px;
+    box-shadow: #5936ac 0 10px 20px -10px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: Inter, Helvetica, "Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", EmojiSymbols, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    opacity: 1;
+    outline: 0 solid transparent;
+    padding: 8px 18px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: fit-content;
+    word-break: break-word;
+    border: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    span {
+        margin-right: .2rem;
+    }
+}
+
+.head__button:hover {
+    transform: scale(1.01);
+    transition: transform 100ms ease-in-out;
+}
+
+.table-title {
+    margin-top: 5rem;
+    margin-bottom: .7rem;
+}
+
+.table {
+    border-collapse: collapse;
+}
+
+.table thead {
+    background-color: #c5c5ff;
+}
+
+.table tr, th, td {
+    border: 1px solid #838383;
+    padding: .3rem .5rem;
+}
