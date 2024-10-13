@@ -124,7 +124,7 @@ class Aula(Base):
     sala_id : Mapped[int] = mapped_column(ForeignKey("salas.id"), primary_key=True)
     turma_id : Mapped[int] = mapped_column(ForeignKey("turmas.id"), primary_key=True)
     disciplina_id : Mapped[int] = mapped_column(ForeignKey("disciplinas.id"), primary_key=True)
-    datahora_inicio : Mapped[datetime] = mapped_column(DateTime)
+    datahora_inicio : Mapped[datetime] = mapped_column(DateTime, primary_key=True)
     duracao : Mapped[int] = mapped_column(Integer)
 
     sala : Mapped["Sala"] = relationship(back_populates="aulas")

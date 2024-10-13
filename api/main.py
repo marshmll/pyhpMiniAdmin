@@ -8,6 +8,8 @@ from .database import SessionLocal, engine
 origins = [
     "http://localhost",
     "http://localhost:3000",
+    "http://127.0.0.1",
+    "http://127.0.0.1:3000",
 ]
 
 models.Base.metadata.create_all(bind=engine)
@@ -88,3 +90,48 @@ def create_professor(professor: schemas.ProfessorCreate, db: Session = Depends(g
 		raise HTTPException(status_code=409, detail="Professor já registrado.")
 		
 	return crud.create_professor(db, professor)
+
+@app.post("/turmas/", response_model=schemas.Turma)
+def create_turma(turma: schemas.TurmaCreate, db: Session = Depends(get_db)):
+	db_turma = crud.get_turma_por_serie_e_turno(db, turma.serie, turma.turno);
+	
+	if db_turma:
+		raise HTTPException(status_code=409, detail="Turma já registrada.")
+		
+	return crud.create_turma(db, turma)
+
+@app.post("/disciplinas/", response_model=schemas.Disciplina)
+def create_disciplina(disciplina: schemas.DisciplinaCreate, db: Session = Depends(get_db)):
+	db_disciplina = crud.get_disciplina_por_nome(db, disciplina.nome);
+	
+	if db_disciplina:
+		raise HTTPException(status_code=409, detail="Disciplina já registrada.")
+		
+	return crud.create_disciplina(db, disciplina)
+
+@app.post("/ministerios/", response_model=schemas.Ministerio)
+def create_ministerio(ministerio: schemas.MinisterioCreate, db: Session = Depends(get_db)):
+	db_ministerio = crud.get_ministerio_por_ids(db, ministerio.professor_id, ministerio.turma_id, ministerio.disciplina_id)
+	
+	if db_ministerio:
+		raise HTTPException(status_code=409, detail="Ministério já registrado.")
+	
+	return crud.create_ministerio(db, ministerio)
+
+@app.post("/aulas/", response_model=schemas.Aula)
+def get_aulas(aula: schemas.AulaCreate, db: Session = Depends(get_db)):
+	db_aula = crud.get_sala_por_ids_e_datahora(db, aula.sala_id, aula.turma_id, aula.disciplina_id, aula.datahora_inicio)
+	
+	if db_aula:
+		raise HTTPException(status_code=409, detail="Aula já registrada.")
+	
+	return crud.create_aula(db, aula)
+
+@app.post("/salas/", response_model=schemas.Sala)
+def get_salas(sala: schemas.SalaCreate, db: Session = Depends(get_db)):
+	db_sala = crud.get_sala_por_bloco_e_num(db, sala.loc_bloco, sala.loc_num)
+	
+	if db_sala:
+		raise HTTPException(status_code=409, detail="Sala já registrada.")
+		
+	return crud.create_sala(db, sala)

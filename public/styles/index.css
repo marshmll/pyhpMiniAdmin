@@ -30,10 +30,102 @@
     background-repeat: no-repeat;
 }
 
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000055;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal--hidden {
+    display: none;
+}
+
+.modal__container {
+    width: 40%;
+    background-color: white;
+    overflow-y: scroll;
+    position: relative;
+    scrollbar-width: none;
+    border-radius: 5px;
+}
+
+.modal__close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #cc1d1d;
+    border: none;
+    margin-right: .5rem;
+    margin-top: .5rem;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 50px;
+
+    span {
+        color: white;
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.modal__title {
+    margin-bottom: 2rem;
+}
+
+.modal__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+.modal__item {
+    width: 80%;
+}
+
+.modal__input {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.modal__submit {
+    font-size: 1.2rem;
+    color: #5936ac;
+    background-color: transparent;
+    border: 2px solid #5936ac;
+    width: 40%;
+    height: 2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 100ms ease-in-out;
+}
+
+.modal__submit:hover {
+    font-weight: 700;
+    background-color: #5936ac;
+    color: white;
+    transform: scale(1.02);
+}
+
 .main {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    position: relative;
 }
 
 .tables {
@@ -92,33 +184,28 @@
     width: 75%;
     height: 80vh;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     flex-direction: column;
     overflow-x: scroll;
     overflow-y: scroll;
-    scrollbar-width: none;
+    padding: 1rem;
 }
 
 .head {
     width: 100%;
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 15%;
-    margin-bottom: 2rem;
-    position: fixed;
+    justify-content: space-around;
 }
 
-.head__left,
-.head__right {
+.head__right,
+.head__left {
     width: 50%;
     display: flex;
     align-items: center;
-    flex-direction: row;
     justify-content: center;
-    gap: 5px;
 }
+
 
 .head__right--disabled {
     opacity: 50%;
@@ -164,7 +251,7 @@
 }
 
 .table-title {
-    margin-top: 5rem;
+    margin-top: 3rem;
     margin-bottom: .7rem;
 }
 
@@ -179,4 +266,6 @@
 .table tr, th, td {
     border: 1px solid #838383;
     padding: .3rem .5rem;
+    
+    text-wrap: nowrap;
 }

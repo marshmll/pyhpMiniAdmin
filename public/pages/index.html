@@ -9,17 +9,52 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="shortcut icon" href="/images/php_logo.svg" type="image/x-icon">
-    <title>phpMiniAdmin</title>
+    <title>pyhpMiniAdmin</title>
 </head>
 
 <body>
     <header class="header">
         <div class="header__logo">
-            <h1 class="header__title">phpMiniAdmin</h1>
+            <h1 class="header__title">pyhpMiniAdmin</h1>
             <div class="header__icon"></div>
         </div>
     </header>
     <main class="main">
+        <div class="modal modal--hidden">
+            <div class="modal__container">
+                <button class="modal__close">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+                <form class="modal__form">
+                    <h2 class="modal__title">Inserir em alunos</h2>
+                    <div class="modal__item">
+                        <label class="modal__label" for="id">name</label>
+                        <input class="modal__input" type="text" name="name" id="name" maxlength="100">
+                    </div>
+                    <div class="modal__item">
+                        <label class="modal__label" for="data_nasc">data_nasc</label>
+                        <input class="modal__input" type="date" name="data_nasc" id="data_nasc">
+                    </div>
+                    <div class="modal__item">
+                        <label class="modal__label" for="cpf">cpf</label>
+                        <input class="modal__input" type="text" name="cpf" id="cpf" maxlength="11">
+                    </div>
+                    <div class="modal__item">
+                        <label class="modal__label" for="matricula">matricula</label>
+                        <input class="modal__input" type="number" name="matricula" id="matricula">
+                    </div>
+                    <div class="modal__item">
+                        <label class="modal__label" for="data_matricula">data_matricula</label>
+                        <input class="modal__input" type="date" name="data_matricula" id="data_matricula">
+                    </div>
+                    <div class="modal__item">
+                        <label class="modal__label" for="turma_id">turma_id</label>
+                        <input class="modal__input" type="number" name="turma_id" id="turma_id">
+                    </div>
+                    <input class="modal__submit" type="submit" value="Inserir">
+                </form>
+            </div>
+        </div>
         <aside class="tables">
             <h2 class="tables__title">Tabelas</h2>
             <ul class="tables__list"></ul>
@@ -27,7 +62,7 @@
         <div class="view">
             <div class="head">
                 <div class="head__left">
-                    <button class="head__button">
+                    <button class="head__button" id="insert">
                         <span class="material-symbols-outlined">add</span>
                         INSERT
                     </button>

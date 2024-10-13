@@ -55,17 +55,20 @@ class Disciplina(DisciplinaBase):
 class MinisterioBase(BaseModel):
 	datavinculo: datetime
 	ano: int
+	professor_id: int
+	turma_id: int
+	disciplina_id: int
 
 class MinisterioCreate(MinisterioBase):
 	pass
 	
 class Ministerio(MinisterioBase):
 	model_config = ConfigDict(from_attributes=True)
-	professor_id: int
-	turma_id: int
-	disciplina_id: int
 	
 class AulaBase(BaseModel):
+	sala_id: int
+	turma_id: int
+	disciplina_id: int
 	datahora_inicio: datetime
 	duracao: int
 	
@@ -74,10 +77,6 @@ class AulaCreate(AulaBase):
 	
 class Aula(AulaBase):
 	model_config = ConfigDict(from_attributes=True)
-	sala_id: int
-	turma_id: int
-	disciplina_id: int
-
 
 class SalaBase(BaseModel):
 	loc_num: int
