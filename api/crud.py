@@ -133,3 +133,45 @@ def create_sala(db: Session, sala: schemas.SalaCreate):
 	db.commit()
 	db.refresh(db_sala)
 	return db_sala
+
+def delete_aluno(db: Session, id: int, matricula: int):
+	rows_affected = db.query(models.Aluno).filter(models.Aluno.id == id, models.Aluno.matricula == matricula).delete()
+	db.commit()
+
+	return rows_affected
+
+def delete_professor(db: Session, id: int, reg_profissional: int):
+	rows_affected = db.query(models.Professor).filter(models.Professor.id == id, models.Professor.reg_profissional == reg_profissional).delete()
+	db.commit()
+
+	return rows_affected
+
+def delete_turma(db: Session, id: int):
+	rows_affected = db.query(models.Turma).filter(models.Turma.id == id).delete()
+	db.commit()
+
+	return rows_affected
+
+def delete_disciplina(db: Session, id: int):
+	rows_affected = db.query(models.Disciplina).filter(models.Disciplina.id == id).delete()
+	db.commit()
+
+	return rows_affected
+
+def delete_ministerio(db: Session, professor_id: int, turma_id: int, disciplina_id: int):
+	rows_affected = db.query(models.Ministerio).filter(models.Ministerio.professor_id == professor_id, models.Ministerio.turma_id == turma_id, models.Ministerio.disciplina_id == disciplina_id).delete()
+	db.commit()
+
+	return rows_affected
+
+def delete_aula(db: Session, sala_id: int, turma_id: int, disciplina_id: int, datahora_inicio: datetime):
+	rows_affected = db.query(models.Aula).filter(models.Aula.sala_id == sala_id, models.Aula.turma_id == turma_id, models.Aula.disciplina_id == disciplina_id, models.Aula.datahora_inicio == datahora_inicio).delete()
+	db.commit()
+
+	return rows_affected
+
+def delete_sala(db: Session, id: int):
+	rows_affected = db.query(models.Sala).filter(models.Sala.id == id).delete()
+	db.commit()
+
+	return rows_affected

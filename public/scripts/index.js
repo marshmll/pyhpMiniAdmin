@@ -100,11 +100,25 @@ function renderTableHead(table) {
 
 // Renders the table body with rows of data.
 function renderTableBody(data, table) {
+    let pkFields = table.filter((field) => field.Key === "PRI");
+    let pkCols = pkFields.map((pk) => pk.Field);
+
     const tableRows = data.map(row => {
-        return `<tr>${table.map(field => createTableCell(row, field)).join("")}</tr>`;
+        return `<tr id="${pkCols.map((pk) => row[pk]).join("-")}">${table.map(field => createTableCell(row, field)).join("")}</tr>`;
     }).join("");
 
     document.querySelector(".table__rows").innerHTML = tableRows;
+
+    const allTableRows = document.querySelectorAll(".table tbody tr");
+
+    document.querySelector(".head__right").classList.add("head__right--disabled")
+    allTableRows.forEach((row) => {
+        row.addEventListener("click", (e) => {
+            document.querySelectorAll(".table tbody tr").forEach(row => row.classList.remove("selected"));
+            row.classList.add("selected");
+            document.querySelector(".head__right").classList.remove("head__right--disabled")
+        });
+    })
 }
 
 // Creates a table cell for each field in the row.
@@ -146,6 +160,20 @@ function getInputType(fieldType) {
     return "text";
 }
 
+// Returns an object with the primary key columns and its values.
+function getPksFromSelectedRow() {
+    const tableName = document.querySelector(".tables__button--active").id;
+
+    const pkFields = tables[tableName].filter((field) => field.Key === "PRI");
+    const cols = pkFields.map((pk) => pk.Field);
+    const vals = document.querySelector(".table tbody .selected").id.split("-");
+
+    return {
+        cols,
+        vals
+    };
+}
+
 // Handles form submission and inserts data into the database.
 async function insertIntoDatabase(formData) {
     const jsonBody = Object.fromEntries(formData.entries());
@@ -171,6 +199,12 @@ async function insertIntoDatabase(formData) {
     }
 }
 
+// Handles deletion of register from database.
+async function deleteFromDatabase(cols = [], values = []) {
+    const tableName = document.querySelector(".tables__button--active").id;
+    console.log(tableName, cols, values);
+}
+
 // Closes the modal.
 function closeModal() {
     modal.classList.add("modal--hidden");
@@ -181,6 +215,17 @@ document.getElementById("insert").addEventListener("click", (e) => {
     e.preventDefault();
     const tableName = document.querySelector(".tables__button--active").id;
     renderInsertModal(tableName, tables[tableName]);
+});
+
+document.getElementById("delete").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    if (document.querySelector(".head__right").classList.contains("head__right--disabled"))
+        return;
+
+    const selectedRowPks = getPksFromSelectedRow();
+
+    deleteFromDatabase(selectedRowPks.cols, selectedRowPks.vals);
 });
 
 document.querySelector(".modal__close").addEventListener("click", closeModal);

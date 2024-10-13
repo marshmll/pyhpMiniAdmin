@@ -1,6 +1,7 @@
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from datetime import datetime
 
 from . import crud, models, schemas
 from .database import SessionLocal, engine
@@ -135,3 +136,45 @@ def get_salas(sala: schemas.SalaCreate, db: Session = Depends(get_db)):
 		raise HTTPException(status_code=409, detail="Sala já registrada.")
 		
 	return crud.create_sala(db, sala)
+
+@app.delete("/alunos/")
+def delete_aluno(id: int, matricula: int, db: Session = Depends(get_db)):
+	rows_affected = crud.delete_aluno(db, id, matricula)
+
+	return rows_affected
+
+@app.delete("/professores/")
+def delete_professor(id: int, reg_profissional: int, db: Session = Depends(get_db)):
+	rows_affected = crud.delete_professor(db, id, reg_profissional)
+
+	return rows_affected
+
+@app.delete("/turmas/")
+def delete_turma(id: int, db: Session = Depends(get_db)):
+	rows_affected = crud.delete_turma(db, id)
+
+	return rows_affected
+
+@app.delete("/disciplinas/")
+def delete_disciplina(id: int, db: Session = Depends(get_db)):
+	rows_affected = crud.delete_disciplina(db, id)
+
+	return rows_affected
+
+@app.delete("/ministerios/")
+def delete_ministerio(professor_id: int, turma_id: int, disciplina_id: int, db: Session = Depends(get_db)):
+	rows_affected = crud.delete_ministerio(db, professor_id, turma_id, disciplina_id)
+
+	return rows_affected
+
+@app.delete("/aulas/")
+def delete_aula(sala_id: int, turma_id: int, disciplina_id: int, datahora_inicio: datetime, db: Session = Depends(get_db)):
+	rows_affected = crud.delete_aula(db, sala_id, turma_id, disciplina_id, datahora_inicio)
+
+	return rows_affected
+
+@app.delete("/salas/")
+def delete_sala(id: int, db: Session = Depends(get_db)):
+	rows_affected = crud.delete_sala(db, id)
+
+	return rows_affected

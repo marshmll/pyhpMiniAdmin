@@ -59,7 +59,7 @@ CREATE TABLE aulas (
     disciplina_id INTEGER NOT NULL, 
     datahora_inicio DATETIME NOT NULL, 
     duracao INTEGER NOT NULL, 
-    PRIMARY KEY (sala_id, turma_id, disciplina_id), 
+    PRIMARY KEY (sala_id, turma_id, disciplina_id, datahora_inicio), 
     FOREIGN KEY(sala_id) REFERENCES salas (id), 
     FOREIGN KEY(turma_id) REFERENCES turmas (id), 
     FOREIGN KEY(disciplina_id) REFERENCES disciplinas (id)

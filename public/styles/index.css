@@ -204,6 +204,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
 }
 
 
@@ -263,9 +264,27 @@
     background-color: #c5c5ff;
 }
 
-.table tr, th, td {
+.table tr,
+th,
+td {
     border: 1px solid #838383;
     padding: .3rem .5rem;
-    
+
     text-wrap: nowrap;
+}
+
+.table tbody tr {
+    cursor: pointer;
+}
+
+.table tbody tr:hover {
+    background-color: #c5c5ff8f;
+}
+
+.table tbody .selected {
+    background-color: #7979d1;
+}
+
+.table tbody .selected:hover {
+    background-color: #7979d1;
 }
