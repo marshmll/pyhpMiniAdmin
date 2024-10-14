@@ -234,7 +234,6 @@
     -webkit-user-select: none;
     touch-action: manipulation;
     width: fit-content;
-    word-break: break-word;
     border: 0;
     display: flex;
     flex-direction: row;

@@ -6,6 +6,7 @@ from datetime import datetime
 from . import crud, models, schemas
 from .database import SessionLocal, engine
 
+# Allowed origins
 origins = [
     "http://localhost",
     "http://localhost:3000",
@@ -13,10 +14,12 @@ origins = [
     "http://127.0.0.1:3000",
 ]
 
+# Init database
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+# CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -25,6 +28,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# DB connection pooling
 def get_db():
     db = SessionLocal()
     try:
@@ -32,6 +36,8 @@ def get_db():
     finally:
         db.close()
 
+
+# GET endpoints ==================================================================================================
 @app.get("/alunos/", response_model=list[schemas.Aluno])
 def get_alunos(db: Session = Depends(get_db)):
     alunos = crud.get_all_alunos(db)
@@ -74,6 +80,8 @@ def get_salas(db: Session = Depends(get_db)):
 	
 	return salas
 
+
+# POST endpoints =================================================================================================
 @app.post("/alunos/", response_model=schemas.Aluno)
 def create_aluno(aluno: schemas.AlunoCreate, db: Session = Depends(get_db)):
     db_aluno = crud.get_aluno_por_matricula(db, aluno.matricula)
@@ -121,7 +129,7 @@ def create_ministerio(ministerio: schemas.MinisterioCreate, db: Session = Depend
 
 @app.post("/aulas/", response_model=schemas.Aula)
 def get_aulas(aula: schemas.AulaCreate, db: Session = Depends(get_db)):
-	db_aula = crud.get_sala_por_ids_e_datahora(db, aula.sala_id, aula.turma_id, aula.disciplina_id, aula.datahora_inicio)
+	db_aula = crud.get_aula_por_ids_e_datahora(db, aula.sala_id, aula.turma_id, aula.disciplina_id, aula.datahora_inicio)
 	
 	if db_aula:
 		raise HTTPException(status_code=409, detail="Aula já registrada.")
@@ -137,6 +145,51 @@ def get_salas(sala: schemas.SalaCreate, db: Session = Depends(get_db)):
 		
 	return crud.create_sala(db, sala)
 
+
+# PATCH endpoints
+@app.patch("/alunos/", response_model=schemas.Aluno)
+def update_aluno(aluno: schemas.Aluno, db: Session = Depends(get_db)):
+	db_aluno = crud.update_aluno(db, aluno)
+
+	return db_aluno
+
+@app.patch("/professores/", response_model=schemas.Professor)
+def update_professor(professor: schemas.Professor, db: Session = Depends(get_db)):
+	db_professor = crud.update_professor(db, professor)
+
+	return db_professor
+
+@app.patch("/turmas/", response_model=schemas.Turma)
+def update_turma(turma: schemas.Turma, db: Session = Depends(get_db)):
+	db_turma = crud.update_turma(db, turma)
+
+	return db_turma
+
+@app.patch("/disciplinas/", response_model=schemas.Disciplina)
+def update_disciplina(disciplina: schemas.Disciplina, db: Session = Depends(get_db)):
+	db_disciplina = crud.update_disciplina(db, disciplina)
+
+	return db_disciplina
+
+@app.patch("/ministerios/", response_model=schemas.Ministerio)
+def update_ministerio(ministerio: schemas.Ministerio, db: Session = Depends(get_db)):
+	db_ministerio = crud.update_ministerio(db, ministerio)
+
+	return db_ministerio
+
+@app.patch("/aulas/", response_model=schemas.Aula)
+def update_aula(aula: schemas.Aula, db: Session = Depends(get_db)):
+	db_aula = crud.update_aula(db, aula)
+
+	return db_aula
+
+@app.patch("/salas/", response_model=schemas.Sala)
+def update_sala(sala: schemas.Sala, db: Session = Depends(get_db)):
+	db_sala = crud.update_sala(db, sala)
+
+	return db_sala
+
+# DELETE endpoints ===============================================================================================
 @app.delete("/alunos/")
 def delete_aluno(id: int, matricula: int, db: Session = Depends(get_db)):
 	rows_affected = crud.delete_aluno(db, id, matricula)
