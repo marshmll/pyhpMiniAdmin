@@ -2,8 +2,6 @@
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 const HOSTNAME = "mysql";
-const USERNAME = "root";
-const PASSWORD = "root";
 const DATABASE = "classroom";
 const PORT     = "3306"; // Docker's database port.
 
@@ -17,7 +15,7 @@ class Database
         }
 
         // MySQLi connection
-        $mysqli = new mysqli(HOSTNAME, USERNAME, PASSWORD, DATABASE, PORT);
+        $mysqli = new mysqli(HOSTNAME, $_SESSION['user'], $_SESSION['passwd'], DATABASE, PORT);
 
         // Check connection
         if ($mysqli->connect_error) {

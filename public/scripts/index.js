@@ -20,6 +20,10 @@ async function renderIndex() {
 async function fetchTables() {
     try {
         const response = await fetch("http://localhost:3000/php/describe_tables.php");
+
+        if (response.status === 401)
+            window.location.replace("http://localhost:3000/login.html");
+
         return await response.json();
     } catch (err) {
         throw new Error("Failed to fetch table descriptions");

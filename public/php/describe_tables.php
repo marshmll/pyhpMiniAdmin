@@ -3,6 +3,12 @@ require_once("./utils/Database.php");
 require_once("./utils/http_responses.php");
 
 header("Content-Type: application/json");
+session_start();
+
+if (!isset($_SESSION['user']) or !isset($_SESSION['passwd'])) {
+    http_response_code(401);
+    die();
+}
 
 $result = Database::query("SHOW TABLES");
 
