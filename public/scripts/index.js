@@ -295,7 +295,21 @@ function closeModal() {
     modal.classList.add("modal--hidden");
 }
 
+
+
 // Event listeners
+document.querySelector(".logout").addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    const res = await fetch("http://localhost:3000/php/logout.php");
+
+    if (res.status === 200) {
+        document.cookie = "PHPSESSID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        window.location.replace("http://localhost:3000/login.html");
+    }
+
+});
+
 document.getElementById("insert").addEventListener("click", (e) => {
     e.preventDefault();
     const tableName = getActiveTableName();

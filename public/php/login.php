@@ -8,6 +8,7 @@ session_start();
 if (isset($_SESSION['user']) and isset($_SESSION['passwd'])) {
     unset($_SESSION['user']);
     unset($_SESSION['passwd']);
+    session_destroy();
 }
 
 if (!isset($_POST['user']) or !isset($_POST['passwd']))

@@ -96,6 +96,27 @@
     position: relative;
 }
 
+.logout {
+    border: none;
+    background-color: #5936ac;
+    color: white;
+    width: 30%;
+    height: 2rem;
+    margin: 2rem auto;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    span {
+        font-size: 1.2rem;
+        margin: 0;
+        padding: 0;
+    }
+}
+
 .tables {
     width: 35%;
 }

@@ -1,10 +1,17 @@
 import { jsonToHTMLTable } from "./jsonToHTMLTable.js";
 
-let editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+CodeMirror.fromTextArea(document.getElementById("editor"), {
     mode: "text/x-mysql",
     lineNumbers: true,
     theme: "default",
 });
+
+async function checkAuthentication() {
+    const res = await fetch("http://localhost:3000/php/check_auth.php");
+
+    if (res.status === 401)
+        window.location.replace("http://localhost:3000/login.html");
+}
 
 const form = document.querySelector(".form");
 const output = document.querySelector(".output");
@@ -27,3 +34,5 @@ form.addEventListener("submit", async (e) => {
 
     output.innerHTML = jsonToHTMLTable(res);
 });
+
+checkAuthentication();
