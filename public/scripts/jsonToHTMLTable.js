@@ -1,5 +1,5 @@
 export function jsonToHTMLTable(jsonData) {
-    if (jsonData.length === 0) return '<table></table>'; // Retorna uma tabela vazia se o array estiver vazio
+    if (jsonData.length === 0) return '<i>Conjunto vazio.</i>';
 
     const keys = Object.keys(jsonData[0]);
     let output = '<table border="1" cellpadding="5" cellspacing="0">\n';
